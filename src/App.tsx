@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Gallery from "./views/Gallery/Gallery";
+import FavImages from "./views/FavImages/FavImages";
+import { getBgImage } from "./api/api";
 function App() {
+  const [bgUrl, setBgUrl] = useState<string>("");
+  const fetchImage = async () => {
+    const url = await getBgImage();
+    setBgUrl(url);
+  };
+
+  useEffect(() => {
+    fetchImage();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      style={{ backgroundImage: `url(${bgUrl})` }}
+      className="w-[100vw] h-auto p-10"
+    >
+      <h1 className="bg-white p-2 w-auto text-indigo-600 font-bold text-2xl sm:text-4xl text-center rounded-lg">
+        Image Gallery
+      </h1>
+
+      <Router>
+        <Routes>
+          <Route index path="/" element={<Gallery />} />
+          <Route path="/favourites" element={<FavImages />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
