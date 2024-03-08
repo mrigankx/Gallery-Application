@@ -31,7 +31,7 @@ const Gallery: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full bg-white h-auto mt-10 rounded-md p-5 ">
+    <div className="w-full bg-white h-full mt-10 rounded-md p-2 md:p-5 ">
       <div className="w-full flex">
         <input
           className="w-full md:w-1/3 bg-gray-200 p-2"
@@ -48,7 +48,7 @@ const Gallery: React.FC = () => {
         </button>
       </div>
 
-      <div className="gap-3 columns-3 mt-10">
+      <div className="gap-1 md:gap-3 columns-3 mt-10">
         {images?.map((image) => (
           <Card image={image} key={image.id} />
         ))}

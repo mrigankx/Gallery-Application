@@ -18,8 +18,8 @@ const Card: React.FC<ImageCardProps> = ({ image }) => {
     <img
       className={
         image.width > image.height
-          ? "w-full aspect-video mb-3"
-          : "w-full aspect-square mb-3"
+          ? "w-full aspect-video mb-2"
+          : "w-full aspect-square mb-2"
       }
       src={image.urls.regular}
       alt={image.alt_description}

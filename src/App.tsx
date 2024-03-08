@@ -17,7 +17,7 @@ function App() {
   return (
     <div
       style={{ backgroundImage: `url(${bgUrl})` }}
-      className="w-[100vw] h-auto p-10"
+      className="w-full h-full p-3 md:p-10 bg-cover"
     >
       <h1 className="bg-white p-2 w-auto text-indigo-600 font-bold text-2xl sm:text-4xl text-center rounded-lg">
         Image Gallery
