@@ -1,24 +1,28 @@
 import React from "react";
 import Card from "../Common/Card";
 
-const FavImages: React.FC = () => {
-  const [starredImages, setStarredImages] = React.useState<string[]>([]);
+interface UnsplashImage {
+  id: string;
+  urls: {
+    regular: string;
+  };
+  alt_description: string;
+  height: number;
+  width: number;
+  slug: string;
+}
 
-  React.useEffect(() => {
-    const fetchStarredImages = async () => {
-      const images = [""];
-      setStarredImages(images);
-    };
-    fetchStarredImages();
-  }, []);
+interface FavProps {
+  starredImages: UnsplashImage[];
+  toggleStarred: (imageId: string, image: UnsplashImage) => void;
+}
 
+const FavImages: React.FC<FavProps> = ({ starredImages, toggleStarred }) => {
   return (
-    <div className="starred-images-page">
-      <h1>Starred Images</h1>
-      <div className="grid grid-cols-3 gap-4">
-        {starredImages.map((image) => (
-          // <Card />
-          <h1>image</h1>
+    <div className="w-full bg-white h-full mt-10 rounded-md p-2 md:p-5 ">
+      <div className="gap-1 md:gap-3 columns-3 mt-10">
+        {starredImages?.map((image) => (
+          <Card image={image} key={image.id} toggleStarred={toggleStarred} />
         ))}
       </div>
     </div>

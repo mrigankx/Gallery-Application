@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Card from "../Common/Card";
 import { getImages, searchImage } from "../../api/api";
@@ -14,10 +14,13 @@ interface UnsplashImage {
   slug: string;
 }
 
-const Gallery: React.FC = () => {
+interface GalleryProps {
+  toggleStarred: (imageId: string, image: UnsplashImage) => void;
+}
+
+const Gallery: React.FC<GalleryProps> = ({ toggleStarred }) => {
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [images, setImages] = React.useState<UnsplashImage[]>([]);
-
   const handleSearch = async () => {
     let searchRes: UnsplashImage[] = await searchImage(searchQuery);
     setImages(searchRes);
@@ -26,6 +29,7 @@ const Gallery: React.FC = () => {
     const allImages = await getImages();
     setImages(allImages);
   };
+
   useEffect(() => {
     getAllImages();
   }, []);
@@ -50,7 +54,7 @@ const Gallery: React.FC = () => {
 
       <div className="gap-1 md:gap-3 columns-3 mt-10">
         {images?.map((image) => (
-          <Card image={image} key={image.id} />
+          <Card image={image} key={image.id} toggleStarred={toggleStarred} />
         ))}
       </div>
     </div>
