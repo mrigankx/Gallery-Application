@@ -18,7 +18,7 @@ const Gallery: React.FC<GalleryProps> = ({ toggleStarred }) => {
   }, []);
 
   return (
-    <div className="w-full bg-white h-full mt-10 rounded-md p-2 md:p-5 ">
+    <div className="w-full bg-white  min-h-screen mt-10 rounded-md p-2 md:p-5 ">
       <div className="w-full flex">
         <input
           className="w-full md:w-1/3 bg-gray-200 p-2"
