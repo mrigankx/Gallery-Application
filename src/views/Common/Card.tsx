@@ -2,16 +2,7 @@ import React, { useState } from "react";
 import starImage from "../../assets/star.png";
 import starFilledImage from "../../assets/star-filled.png";
 
-interface UnsplashImage {
-  id: string;
-  urls: {
-    regular: string;
-  };
-  alt_description: string;
-  height: number;
-  width: number;
-  slug: string;
-}
+import { UnsplashImage } from "../../interfaces/UnsplashImage";
 
 interface ImageCardProps {
   image: UnsplashImage;

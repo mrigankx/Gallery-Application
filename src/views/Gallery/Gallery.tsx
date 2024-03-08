@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import Card from "../Common/Card";
-import { getImages, searchImage } from "../../api/api";
 
-interface UnsplashImage {
-  id: string;
-  urls: {
-    regular: string;
-  };
-  alt_description: string;
-  height: number;
-  width: number;
-  slug: string;
-}
+import { UnsplashImage } from "../../interfaces/UnsplashImage";
+import { getAllImages, handleSearch } from "../../businessLogics";
 
 interface GalleryProps {
   toggleStarred: (imageId: string, image: UnsplashImage) => void;
@@ -21,17 +12,9 @@ interface GalleryProps {
 const Gallery: React.FC<GalleryProps> = ({ toggleStarred }) => {
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [images, setImages] = React.useState<UnsplashImage[]>([]);
-  const handleSearch = async () => {
-    let searchRes: UnsplashImage[] = await searchImage(searchQuery);
-    setImages(searchRes);
-  };
-  const getAllImages = async () => {
-    const allImages = await getImages();
-    setImages(allImages);
-  };
 
   useEffect(() => {
-    getAllImages();
+    getAllImages(setImages);
   }, []);
 
   return (
@@ -46,7 +29,7 @@ const Gallery: React.FC<GalleryProps> = ({ toggleStarred }) => {
         />
         <button
           className="bg-blue-500 hover:bg-blue-400 p-2 text-white ml-2"
-          onClick={handleSearch}
+          onClick={() => handleSearch(searchQuery, setImages)}
         >
           Search
         </button>

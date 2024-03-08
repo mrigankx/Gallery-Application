@@ -3,22 +3,14 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Gallery from "./views/Gallery/Gallery";
 import FavImages from "./views/FavImages/FavImages";
-import { getBgImage } from "./api/api";
 
-interface UnsplashImage {
-  id: string;
-  urls: {
-    regular: string;
-  };
-  alt_description: string;
-  height: number;
-  width: number;
-  slug: string;
-}
+import { UnsplashImage } from "./interfaces/UnsplashImage";
+import { fetchImage } from "./businessLogics";
 
 function App() {
   const [bgUrl, setBgUrl] = useState<string>("");
   const [starredImages, setStarredImages] = useState<UnsplashImage[]>([]);
+
   const toggleStarred = (imageId: string, image: UnsplashImage) => {
     const isPresent = starredImages.some((item) => item.id === imageId);
     if (isPresent) {
@@ -27,20 +19,16 @@ function App() {
       setStarredImages([...starredImages, image]);
     }
   };
-  const fetchImage = async () => {
-    const url = await getBgImage();
-    setBgUrl(url);
-  };
 
   useEffect(() => {
-    fetchImage();
+    fetchImage(setBgUrl);
   }, []);
   return (
-    <Router>
-      <div
-        style={{ backgroundImage: `url(${bgUrl})` }}
-        className="w-full h-full p-3 md:p-10 bg-cover"
-      >
+    <div
+      style={{ backgroundImage: `url(${bgUrl})` }}
+      className="w-full h-full p-3 md:p-10"
+    >
+      <Router>
         <div className="bg-white p-2 w-auto rounded-lg flex justify-between">
           <Link to="/">
             <h1 className="text-indigo-600 font-bold text-2xl sm:text-4xl text-center">
@@ -71,8 +59,8 @@ function App() {
             }
           />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 }
 
